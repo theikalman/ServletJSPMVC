@@ -21,7 +21,7 @@ public class ArtikelDao {
 	private PreparedStatement insertStatement, updateStatement, deleteStatement, selectAllStatement, selectByIdStatement, selectByURLStatement;
 	
 	private final String insertQuery = "INSERT INTO artikel(judul, seo_url, isi, ket, kategori_id, user_id) VALUES(?, ?, ?, ?, ?, ?)";
-	private final String updateQuery = "INSERT INTO artikel SET judul=?, seo_url=?, isi=?, ket=?, kategori_id=?, user_id=? WHERE id=?";
+	private final String updateQuery = "UPDATE artikel SET judul=?, seo_url=?, isi=?, ket=?, kategori_id=?, user_id=? WHERE id=?";
 	private final String deleteQuery = "DELETE FROM artikel WHERE id=?";
 	private final String selectAllQuery = "SELECT * FROM artikel";
 	private final String selectByIdQuery = "SELECT * FROM artikel WHERE id=?";
@@ -43,48 +43,44 @@ public class ArtikelDao {
 		this.selectByURLStatement = this.connection.prepareStatement(this.selectByURLQuery);
 		
 	}
-
-	/**
-	 * Insert artikel kedalam database
-	 * 
-	 * @param artikel
-	 * @return Artikel - Mengembalikan artikel yang berhasil di insert
-	 * @throws SQLException 
-	 */
-	public Artikel insert(Artikel artikel) throws SQLException {
-		
-		this.insertStatement.setString(1, artikel.getJudul());
-		this.insertStatement.setString(2, artikel.getSeoUrl());
-		this.insertStatement.setString(3, artikel.getIsi());
-		this.insertStatement.setString(4, artikel.getKet());
-		this.insertStatement.setInt(5, artikel.getKategori().getIdKategori());
-		this.insertStatement.setInt(6, artikel.getUser().getIdUser());
-		
-		int idUser = this.insertStatement.executeUpdate();
-		artikel.setIdArtikel(idUser);
-		
-		return artikel;
-		
-	}
 	
 	/**
-	 * Update user di database
+	 * Save artikel, jika id artikel sudah ada dalam database
+	 * maka secara otomatis akan melakukan update
 	 * 
-	 * @param artikel
-	 * @return Artikel - Mengembalikan artikel yang berhasil di update
+	 * @param artikel - Artikel yang akan disimpan (baru) atau update
+	 * @return Artikel - mengembalikan artikel yang berhasil di insert atau update
 	 * @throws SQLException 
 	 */
-	public Artikel update(Artikel artikel) throws SQLException {
+	public Artikel save(Artikel artikel) throws SQLException {
 		
-		this.insertStatement.setString(1, artikel.getJudul());
-		this.insertStatement.setString(2, artikel.getSeoUrl());
-		this.insertStatement.setString(3, artikel.getIsi());
-		this.insertStatement.setString(4, artikel.getKet());
-		this.insertStatement.setInt(5, artikel.getKategori().getIdKategori());
-		this.insertStatement.setInt(6, artikel.getUser().getIdUser());
-		this.insertStatement.setInt(7, artikel.getIdArtikel());
+		int idArtikel = artikel.getIdArtikel();
 		
-		this.updateStatement.executeUpdate();
+		if(idArtikel == 0) { // insert
+			
+			this.insertStatement.setString(1, artikel.getJudul());
+			this.insertStatement.setString(2, artikel.getSeoUrl());
+			this.insertStatement.setString(3, artikel.getIsi());
+			this.insertStatement.setString(4, artikel.getKet());
+			this.insertStatement.setInt(5, artikel.getKategori().getIdKategori());
+			this.insertStatement.setInt(6, artikel.getUser().getIdUser());
+			
+			int idUser = this.insertStatement.executeUpdate();
+			artikel.setIdArtikel(idUser);
+			
+		} else { // update
+
+			this.updateStatement.setString(1, artikel.getJudul());
+			this.updateStatement.setString(2, artikel.getSeoUrl());
+			this.updateStatement.setString(3, artikel.getIsi());
+			this.updateStatement.setString(4, artikel.getKet());
+			this.updateStatement.setInt(5, artikel.getKategori().getIdKategori());
+			this.updateStatement.setInt(6, artikel.getUser().getIdUser());
+			this.updateStatement.setInt(7, artikel.getIdArtikel());
+			
+			this.updateStatement.executeUpdate();
+			
+		}
 		
 		return artikel;
 		

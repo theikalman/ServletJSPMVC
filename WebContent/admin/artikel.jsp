@@ -19,7 +19,7 @@
 			for(int i=0; i<artikels.size(); i++) {
 			%>
 				<div class="col-sm-4">
-					<div class="col-sm-12 artikel-list">
+					<div class="artikel-list">
 						<a href="<%=request.getServletContext().getInitParameter("BASE_URL") %>/artikel?act=delete&url=<%=artikels.get(i).getSeoUrl() %>" class="btn btn-lg btn-circle marginable pull-right glyphicon glyphicon-remove-sign" alt="delete"></a>
 						<a href="<%=request.getServletContext().getInitParameter("BASE_URL") %>/artikel?act=edit&url=<%=artikels.get(i).getSeoUrl() %>">
 							<h3><%=artikels.get(i).getJudul() %> 

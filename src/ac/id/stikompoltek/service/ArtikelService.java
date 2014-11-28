@@ -23,15 +23,15 @@ public class ArtikelService {
 	}
 	
 	/**
-	 * Simpan artikel baru
+	 * Simpan artikel, jika id artikel tidak kosong (0), maka akan secara otomatis mengupdate
 	 * 
 	 * @param artikel
-	 * @return Artikel - Mengembalikan artikel yang berhasil di insert
+	 * @return Artikel - mengembalikan artikel yang berhasil di simpan
 	 */
-	public Artikel insert(Artikel artikel) {
+	public Artikel save(Artikel artikel) {
 		try {
 			this.connection.setAutoCommit(false);
-			this.artikelDao.insert(artikel);
+			this.artikelDao.save(artikel);
 			this.connection.commit();
 			this.connection.setAutoCommit(true);
 		} catch (SQLException e) {
@@ -40,29 +40,7 @@ public class ArtikelService {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-			return null;
-		}
-		return artikel;
-	}
-	
-	/**
-	 * Update artikel
-	 * 
-	 * @param artikel
-	 * @return Artikel - Mengembalikan artikel yang berhasil di update
-	 */
-	public Artikel update(Artikel artikel) {
-		try {
-			this.connection.setAutoCommit(false);
-			this.artikelDao.update(artikel);
-			this.connection.commit();
-			this.connection.setAutoCommit(true);
-		} catch (SQLException e) {
-			try {
-				this.connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			e.printStackTrace();
 			return null;
 		}
 		return artikel;
