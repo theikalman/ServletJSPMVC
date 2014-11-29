@@ -13,7 +13,12 @@
 <%@include file="header.jsp" %>
 	
 		<div class="col-sm-12 main">
-			<h1 class="page-header">Artikel</h1>
+			<div class"col-sm-7">
+				<h1 class="page-header">Artikel</h1>
+			</div>
+			<div class"col-sm-3">
+				<a href="<%=request.getServletContext().getInitParameter("BASE_URL") %>/artikel/?act=add" class="btn btn-primary pull-right">Add new articles</a>
+			</div>
 			<%
 			List<Artikel> artikels = (List<Artikel>) request.getAttribute("artikelList");
 			for(int i=0; i<artikels.size(); i++) {
