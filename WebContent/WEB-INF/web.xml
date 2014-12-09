@@ -8,4 +8,8 @@
   	<description>Listener dengan scope Servlet Context</description>
   	<listener-class>ac.id.stikompoltek.listener.ServContListener</listener-class>
   </listener>
+  <context-param>
+  	<param-name>BASE_URL</param-name>
+  	<param-value>http://localhost:8080/ServletJSPMVC</param-value>
+  </context-param>
 </web-app>
