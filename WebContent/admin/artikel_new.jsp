@@ -10,29 +10,20 @@
 
 <div class="col-sm-12 main">
 	<h1 class="page-header">
-		Artikel <small class="text-muted">Edit artikel</small>
+		Artikel <small class="text-muted">Add new artikel</small>
 	</h1>
 
 	<%
-			Artikel selectedArtikel = (Artikel) request.getAttribute("selectedArtikel");
 			List<Kategori> kategoris = (List<Kategori>) request.getAttribute("listKategori");
 			%>
 
 	<form
 		action="<%=request.getServletContext().getInitParameter("BASE_URL") %>/artikel"
 		method="post" role="form">
-		<div class="col-sm-12">
-			<div class="form-group">
-				<label for="id-kategori">Id Artikel</label> <input type="text"
-					name="id-artikel" value="<%=selectedArtikel.getIdArtikel() %>"
-					class="form-control" />
-			</div>
-		</div>
 		<div class="col-sm-6">
 			<div class="form-group">
 				<label for="id-kategori">Judul</label> <input type="text"
-					name="judul-artikel" value="<%=selectedArtikel.getJudul() %>"
-					class="form-control" autofocus="autofocus" />
+					name="judul-artikel" class="form-control" autofocus="autofocus" />
 			</div>
 		</div>
 		<div class="col-sm-3">
@@ -40,12 +31,7 @@
 				<label for="id-kategori">Nama Kategori</label> <select
 					name="id-kategori" class="form-control">
 					<% for(int i=0; i<kategoris.size(); i++) { %>
-					<% if(kategoris.get(i).getIdKategori() == selectedArtikel.getKategori().getIdKategori()) { %>
-					<option value="<%=kategoris.get(i).getIdKategori() %>"
-						selected="selected"><%=kategoris.get(i).getNama() %></option>
-					<% } else { %>
 					<option value="<%=kategoris.get(i).getIdKategori() %>"><%=kategoris.get(i).getNama() %></option>
-					<% } %>
 					<% } %>
 				</select>
 			</div>
@@ -53,14 +39,13 @@
 		<div class="col-sm-3">
 			<div class="form-group">
 				<label for="id-kategori">Keterangan</label> <input type="text"
-					name="ket-artikel" value="<%=selectedArtikel.getKet() %>"
-					class="form-control" />
+					name="ket-artikel" class="form-control" />
 			</div>
 		</div>
 		<div class="col-sm-12">
 			<div class="form-group">
 				<label for="id-kategori">Isi Artikel</label>
-				<textarea name="isi-artikel" class="form-control"><%=selectedArtikel.getIsi() %></textarea>
+				<textarea name="isi-artikel" class="form-control"></textarea>
 			</div>
 		</div>
 		<div class="col-sm-12">

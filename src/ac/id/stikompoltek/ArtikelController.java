@@ -36,16 +36,28 @@ public class ArtikelController extends HttpServlet {
 			
 			if(act != null) {
 				
-				int idArtikel = Integer.valueOf(request.getParameter("id-artikel"));
+				// Get post data
+				String idArtikelPost = request.getParameter("id-artikel");
+				String idKategoriPost = request.getParameter("id-kategori");
+				String judulArtikelPost = request.getParameter("judul-artikel");
+				// label ?
+				String ketKategoriPost = request.getParameter("ket-artikel");
+				String isiArtikelPost = request.getParameter("isi-artikel");
 				
+				// Set advanced data
+				int idArtikel = (idArtikelPost != null) ? Integer.valueOf(request.getParameter("id-artikel")) : 0;
+				String[] judulSplit = judulArtikelPost.toLowerCase().split(" ");
+				String seoUrl = String.join("-", judulSplit);
+				
+				// Get connection
 				Connection connection = (Connection) request.getServletContext().getAttribute("mysqlConnection");
 				
-				// Kategori
+				// Get Kategori from database
 				KategoriService kategoriService = new KategoriService();
 				kategoriService.setConnection(connection);
-				Kategori kategori = kategoriService.getById(Integer.valueOf(request.getParameter("id-kategori")));
+				Kategori kategori = kategoriService.getById(Integer.valueOf(idKategoriPost));
 				
-				// User
+				// Get User from database
 				UserService userService = new UserService();
 				userService.setConnection(connection);
 				User user = (User) request.getSession().getAttribute("userLoggedIn");
@@ -54,13 +66,20 @@ public class ArtikelController extends HttpServlet {
 				ArtikelService artikelService = new ArtikelService();
 				artikelService.setConnection(connection);
 				
-				Artikel artikel = artikelService.getById(idArtikel);
+				Artikel artikel = new Artikel();
 				
-				artikel.setJudul(request.getParameter("judul-artikel"));
+				// If idArtikel != 0 update data, otherwise insert
+				if(idArtikel != 0) {					
+					artikel = artikelService.getById(idArtikel);
+				}
+				
+				artikel.setIdArtikel(idArtikel);
+				artikel.setJudul(judulArtikelPost);
+				artikel.setSeoUrl(seoUrl);
 				artikel.setKategori(kategori);
 				artikel.setUser(user);
-				artikel.setKet(request.getParameter("ket-artikel"));
-				artikel.setIsi(request.getParameter("isi-artikel"));
+				artikel.setKet(ketKategoriPost);
+				artikel.setIsi(isiArtikelPost);
 				
 				// Execute save
 				artikelService.save(artikel);
@@ -80,6 +99,7 @@ public class ArtikelController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Connection connection = (Connection) request.getServletContext().getAttribute("mysqlConnection");
+		RequestDispatcher dispatcher;
 		
 		ArtikelService artikelService = new ArtikelService();
 		KategoriService kategoriService = new KategoriService();
@@ -91,26 +111,36 @@ public class ArtikelController extends HttpServlet {
 		String action = (String) request.getParameter("act");
 		String artikelUrl = (String) request.getParameter("url");
 		
-		if(action != null && artikelUrl != null) {
+		if(action != null) {
 			
 			Artikel artikel = artikelService.getByURL(artikelUrl);
 			List<Kategori> kategoris = kategoriService.getAll();
 			
 			switch (action) {
-			case "edit":
-				// Get selected artikel
-				request.setAttribute("selectedArtikel", artikel);
+			case "add":
 				request.setAttribute("listKategori", kategoris);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("admin/artikel_edit.jsp");
+				dispatcher = request.getRequestDispatcher("admin/artikel_new.jsp");
 				dispatcher.forward(request, response);
 				return;
 				
+			case "edit":
+				if(artikelUrl != null){
+					// Get selected artikel
+					request.setAttribute("selectedArtikel", artikel);
+					request.setAttribute("listKategori", kategoris);
+					dispatcher = request.getRequestDispatcher("admin/artikel_edit.jsp");
+					dispatcher.forward(request, response);
+					return;
+				}
+				
 			case "delete":
-				// Get selected artikel
-				artikelService.delete(artikel);
-				// redirect to artikel list
-				response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/artikel");
-				return;
+				if(artikelUrl != null) {
+					// Get selected artikel
+					artikelService.delete(artikel);
+					// redirect to artikel list
+					response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/artikel");
+					return;
+				}
 
 			default:
 				break;
@@ -122,7 +152,7 @@ public class ArtikelController extends HttpServlet {
 		request.setAttribute("artikelList", artikelList);
 		
 		// Forward to the view
-		RequestDispatcher dispatcher = request.getRequestDispatcher("admin/artikel.jsp");
+		dispatcher = request.getRequestDispatcher("admin/artikel.jsp");
 		dispatcher.forward(request, response);
 		
 	}
