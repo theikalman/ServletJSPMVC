@@ -8,24 +8,24 @@ import javax.servlet.annotation.WebListener;
  *
  */
 @WebListener
-public class ServletContextListener implements javax.servlet.ServletContextListener {
+public class GlobalListernerByJi implements javax.servlet.ServletContextListener {
 
     /**
      * Default constructor. 
      */
-    public ServletContextListener() {
+    public GlobalListernerByJi() {
         // TODO Auto-generated constructor stub
     }
 
 	/**
-     * @see ServletContextListener#contextDestroyed(ServletContextEvent)
+     * @see GlobalListernerByJi#contextDestroyed(ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent arg0) {
     	System.out.println("Context destroyed");
     }
 
 	/**
-     * @see ServletContextListener#contextInitialized(ServletContextEvent)
+     * @see GlobalListernerByJi#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0) {
         System.out.println("Context initialized");
