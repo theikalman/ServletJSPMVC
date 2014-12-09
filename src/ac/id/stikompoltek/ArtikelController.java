@@ -40,7 +40,7 @@ public class ArtikelController extends HttpServlet {
 				String idArtikelPost = request.getParameter("id-artikel");
 				String idKategoriPost = request.getParameter("id-kategori");
 				String judulArtikelPost = request.getParameter("judul-artikel");
-				// label ?
+				// TODO You have to add label handler here...
 				String ketKategoriPost = request.getParameter("ket-artikel");
 				String isiArtikelPost = request.getParameter("isi-artikel");
 				
@@ -60,7 +60,7 @@ public class ArtikelController extends HttpServlet {
 				// Get User from database
 				UserService userService = new UserService();
 				userService.setConnection(connection);
-				User user = (User) request.getSession().getAttribute("userLoggedIn");
+				User currentUser = (User) request.getSession().getAttribute("userLoggedIn");
 				
 				// Artikel
 				ArtikelService artikelService = new ArtikelService();
@@ -68,7 +68,7 @@ public class ArtikelController extends HttpServlet {
 				
 				Artikel artikel = new Artikel();
 				
-				// If idArtikel != 0 update data, otherwise insert
+				// If idArtikel != 0 update data, otherwise insert as new record
 				if(idArtikel != 0) {					
 					artikel = artikelService.getById(idArtikel);
 				}
@@ -77,13 +77,14 @@ public class ArtikelController extends HttpServlet {
 				artikel.setJudul(judulArtikelPost);
 				artikel.setSeoUrl(seoUrl);
 				artikel.setKategori(kategori);
-				artikel.setUser(user);
+				artikel.setUser(currentUser);
 				artikel.setKet(ketKategoriPost);
 				artikel.setIsi(isiArtikelPost);
 				
 				// Execute save
 				artikelService.save(artikel);
 				
+				// Send to the view
 				response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/artikel");
 				
 			}
@@ -98,12 +99,14 @@ public class ArtikelController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// Get connection from ServletContext scope
 		Connection connection = (Connection) request.getServletContext().getAttribute("mysqlConnection");
 		RequestDispatcher dispatcher;
 		
 		ArtikelService artikelService = new ArtikelService();
 		KategoriService kategoriService = new KategoriService();
 		
+		// Set connection for every Service
 		artikelService.setConnection(connection);
 		kategoriService.setConnection(connection);
 		
@@ -145,7 +148,10 @@ public class ArtikelController extends HttpServlet {
 			default:
 				break;
 			}
-		}
+		} 
+		
+		
+		// When no action on http parameter, then show all articles
 		
 		// Get artikel data
 		List<Artikel> artikelList = artikelService.getAll();
