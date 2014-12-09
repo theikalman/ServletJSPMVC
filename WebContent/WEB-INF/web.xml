@@ -6,6 +6,6 @@
   </welcome-file-list>
   <listener>
     <description>Listener dengan scope Servlet Context</description>
-    <listener-class>ac.id.stikompoltek.listener.GlobalListernerByJi</listener-class>
+    <listener-class>ac.id.stikompoltek.listener.ServletContextListener</listener-class>
   </listener>
 </web-app>
