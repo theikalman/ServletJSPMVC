@@ -17,7 +17,7 @@ import ac.id.stikompoltek.service.KategoriService;
 @WebServlet("/kategori")
 public class KategoriController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 
 	}
@@ -44,7 +44,7 @@ public class KategoriController extends HttpServlet {
 			if (act != null) {
 				switch (act) {
 				case "add":
-					dispatcher = request.getRequestDispatcher(request.getServletContext().getInitParameter("BASE_URL") + "/admin/kategori_add.jsp");
+					dispatcher = request.getRequestDispatcher("admin/kategori_new.jsp");
 					dispatcher.forward(request, response);
 					return;
 
@@ -54,13 +54,14 @@ public class KategoriController extends HttpServlet {
 						Kategori kategori = kategoriService.getByURL(url);
 						// Set data for view
 						request.setAttribute("kategoriSelected", kategori);
-						dispatcher = request.getRequestDispatcher(request.getServletContext().getInitParameter("BASE_URL") + "/admin/kategori_edit.jsp");
+						dispatcher = request.getRequestDispatcher("admin/kategori_edit.jsp");
 						dispatcher.forward(request, response);
 						return;
 					}
 					break;
 
 				case "delete":
+					// TODO First, make sure that there are no artikel that using kategori we will delete
 					if(url != null) {
 						Kategori kategori = kategoriService.getByURL(url);
 						kategoriService.delete(kategori);
@@ -73,7 +74,7 @@ public class KategoriController extends HttpServlet {
 			}
 
 			// Show for all kategori if no act value on http parameter
-			dispatcher = request.getRequestDispatcher(request.getServletContext().getInitParameter("BASE_URL") + "/admin/kategori.jsp");
+			dispatcher = request.getRequestDispatcher("admin/kategori.jsp");
 
 			// Get all kategori data
 			List<Kategori> kategoris = kategoriService.getAll();

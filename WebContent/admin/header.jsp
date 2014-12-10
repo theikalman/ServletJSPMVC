@@ -59,9 +59,8 @@
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">Blog</a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a
-								href="<%=request.getServletContext().getInitParameter("BASE_URL") %>/artikel">Artikel</a></li>
-							<li><a href="kategori.jsp">Kategori</a></li>
+							<li><a href="<%=request.getServletContext().getInitParameter("BASE_URL") %>/artikel">Artikel</a></li>
+							<li><a href="<%=request.getServletContext().getInitParameter("BASE_URL") %>/kategori">Kategori</a></li>
 							<li><a href="tag.jsp">Tag</a></li>
 						</ul></li>
 				</ul>
