@@ -23,17 +23,18 @@ public class UserService {
 	}
 	
 	/**
-	 * Simpan user baru
+	 * Save user data, if you want to save it as new data, set idUser to 0
 	 * 
 	 * @param user
-	 * @return User - Mengembalikan user yang berhasil di insert
+	 * @return
 	 */
-	public User insert(User user) {
+	public User save(User user) {
 		try {
 			this.connection.setAutoCommit(false);
-			this.userDao.insert(user);
+			this.userDao.save(user);
 			this.connection.commit();
 			this.connection.setAutoCommit(true);
+			return user;
 		} catch (SQLException e) {
 			try {
 				this.connection.rollback();
@@ -42,30 +43,7 @@ public class UserService {
 			}
 			return null;
 		}
-		return user;
-	}
-	
-	/**
-	 * Update user
-	 * 
-	 * @param user
-	 * @return User - Mengembalikan user yang berhasil di update
-	 */
-	public User update(User user) {
-		try {
-			this.connection.setAutoCommit(false);
-			this.userDao.update(user);
-			this.connection.commit();
-			this.connection.setAutoCommit(true);
-		} catch (SQLException e) {
-			try {
-				this.connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			return null;
-		}
-		return user;
+		
 	}
 	
 	/**

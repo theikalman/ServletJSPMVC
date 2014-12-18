@@ -11,15 +11,54 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ac.id.stikompoltek.dto.Artikel;
 import ac.id.stikompoltek.dto.Kategori;
+import ac.id.stikompoltek.service.ArtikelService;
 import ac.id.stikompoltek.service.KategoriService;
 
 @WebServlet("/kategori")
 public class KategoriController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		// Check login
+		boolean isLoggedIn = (request.getSession().getAttribute("userLoggedIn") == null) ? false : true;
 
+		if (isLoggedIn) {
+			
+			// Connection
+			Connection connection = (Connection) request.getServletContext().getAttribute("mysqlConnection");
+			
+			// Kategori Service
+			KategoriService kategoriService = new KategoriService();
+			kategoriService.setConnection(connection);
+			
+			// Get action on post parameter
+			String act = request.getParameter("act");
+			
+			if(act != null) {
+				switch (act) {
+				case "save":
+					Kategori kategori = new Kategori();
+					int idKategori = (request.getParameter("id-kategori") != null) ? Integer.parseInt(request.getParameter("id-kategori")) : 0 ;
+					kategori.setIdKategori(idKategori);
+					kategori.setNama(request.getParameter("nama-kategori"));
+					kategori.setSeoUrl(kategori.getNama().toLowerCase().replace(" ", "-"));
+					kategori.setKet(request.getParameter("ket-kategori"));
+					kategoriService.save(kategori);
+					break;
+
+				default:
+					break;
+				}
+			}
+			
+			// Send to the view
+			response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/kategori");
+			
+		}
+		
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -48,7 +87,7 @@ public class KategoriController extends HttpServlet {
 					dispatcher.forward(request, response);
 					return;
 
-				case "update":
+				case "edit":
 					if(url != null) {
 						// Get selected kategori
 						Kategori kategori = kategoriService.getByURL(url);
@@ -61,10 +100,21 @@ public class KategoriController extends HttpServlet {
 					break;
 
 				case "delete":
-					// TODO First, make sure that there are no artikel that using kategori we will delete
+					// Artikel Service
+					ArtikelService artikelService = new ArtikelService();
+					artikelService.setConnection(connection);
+					
 					if(url != null) {
+						
 						Kategori kategori = kategoriService.getByURL(url);
-						kategoriService.delete(kategori);
+						
+						// Get artikels who use this kategori
+						List<Artikel> artikels = artikelService.getByIdKategori(kategori.getIdKategori());
+						// Delete if no one artikel that who use this artikel
+						if(artikels.isEmpty()) {
+							kategoriService.delete(kategori);							
+						}
+						
 					}
 					break;
 

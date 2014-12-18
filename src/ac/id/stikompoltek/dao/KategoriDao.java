@@ -17,7 +17,7 @@ public class KategoriDao {
 	private PreparedStatement insertStatement, updateStatement, deleteStatement, selectAllStatement, selectByIdStatement, selectByURLStatement;
 	
 	private final String insertQuery = "INSERT INTO kategori(nama, seo_url, ket) VALUES(?,?,?)";
-	private final String updateQuery = "INSERT INTO kategori SET nama=?, seo_url=?, ket=? WHERE id=?";
+	private final String updateQuery = "UPDATE kategori SET nama=?, seo_url=?, ket=? WHERE id=?";
 	private final String deleteQuery = "DELETE FROM kategori WHERE id=?";
 	private final String selectAllQuery = "SELECT * FROM kategori";
 	private final String selectByIdQuery = "SELECT * FROM kategori WHERE id=?";
@@ -39,44 +39,41 @@ public class KategoriDao {
 		this.selectByURLStatement = this.connection.prepareStatement(this.selectByURLQuery);
 		
 	}
-
-	/**
-	 * Insert kategori kedalam database
-	 * 
-	 * @param kategori
-	 * @return User - Mengembalikan kategori yang berhasil di insert
-	 * @throws SQLException 
-	 */
-	public Kategori insert(Kategori kategori) throws SQLException {
-		
-		this.insertStatement.setString(1, kategori.getNama());
-		this.insertStatement.setString(2, kategori.getSeoUrl());
-		this.insertStatement.setString(3, kategori.getKet());
-		
-		int idKategori = this.insertStatement.executeUpdate();
-		kategori.setIdKategori(idKategori);
-		
-		return kategori;
-		
-	}
 	
 	/**
-	 * Update kategori di database
+	 * Save kategori, set idKategori to 0 if you want to insert it as new data
 	 * 
 	 * @param kategori
-	 * @return Kategori - Mengembalikan kategori yang berhasil di update
-	 * @throws SQLException 
+	 * @return
+	 * @throws SQLException
 	 */
-	public Kategori update(Kategori kategori) throws SQLException {
+	public Kategori save(Kategori kategori) throws SQLException {
 		
-		this.updateStatement.setString(1, kategori.getNama());
-		this.updateStatement.setString(2, kategori.getSeoUrl());
-		this.updateStatement.setString(3, kategori.getKet());
-		this.updateStatement.setInt(4, kategori.getIdKategori());
-		
-		this.updateStatement.executeUpdate();
-		
-		return kategori;
+		if(kategori.getIdKategori() == 0) {
+			
+			// Insert
+			this.insertStatement.setString(1, kategori.getNama());
+			this.insertStatement.setString(2, kategori.getSeoUrl());
+			this.insertStatement.setString(3, kategori.getKet());
+			
+			int idKategori = this.insertStatement.executeUpdate();
+			kategori.setIdKategori(idKategori);
+			
+			return kategori;
+			
+		} else {
+			
+			// Update
+			this.updateStatement.setString(1, kategori.getNama());
+			this.updateStatement.setString(2, kategori.getSeoUrl());
+			this.updateStatement.setString(3, kategori.getKet());
+			this.updateStatement.setInt(4, kategori.getIdKategori());
+			
+			this.updateStatement.executeUpdate();
+			
+			return kategori;
+			
+		}
 		
 	}
 	

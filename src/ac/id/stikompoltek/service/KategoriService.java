@@ -24,49 +24,28 @@ public class KategoriService {
 	
 	
 	/**
-	 * Simpan kategori baru
+	 * Save kategori, set idKategori to 0 if you want to insert it as new data
 	 * 
 	 * @param kategori
-	 * @return Kategori - Mengembalikan kategori yang berhasil di insert
+	 * @return
 	 */
-	public Kategori insert(Kategori kategori) {
+	public Kategori save(Kategori kategori) {
+		
 		try {
 			this.connection.setAutoCommit(false);
-			this.kategoriDao.insert(kategori);
+			this.kategoriDao.save(kategori);
 			this.connection.commit();
 			this.connection.setAutoCommit(true);
+			return kategori;
 		} catch (SQLException e) {
 			try {
-				this.connection.rollback();
+				connection.rollback();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 			return null;
 		}
-		return kategori;
-	}
-	
-	/**
-	 * Update kategori
-	 * 
-	 * @param kategori
-	 * @return Kategori - Mengembalikan kategori yang berhasil di update
-	 */
-	public Kategori update(Kategori kategori) {
-		try {
-			this.connection.setAutoCommit(false);
-			this.kategoriDao.update(kategori);
-			this.connection.commit();
-			this.connection.setAutoCommit(true);
-		} catch (SQLException e) {
-			try {
-				this.connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			return null;
-		}
-		return kategori;
+		
 	}
 	
 	/**

@@ -113,4 +113,19 @@ public class ArtikelService {
 		return null;
 	}
 	
+	/**
+	 * Get artikel by kategori id
+	 * 
+	 * @param idKategori
+	 * @return List of artikels that using selected kategori that was specified on parameter
+	 */
+	public List<Artikel> getByIdKategori(int idKategori) {
+		try {
+			return this.artikelDao.getByIdKategori(idKategori);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 }

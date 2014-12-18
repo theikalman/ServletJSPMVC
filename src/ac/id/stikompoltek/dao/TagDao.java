@@ -17,7 +17,7 @@ public class TagDao {
 	private PreparedStatement insertStatement, updateStatement, deleteStatement, selectAllStatement, selectByIdStatement, selectByURLStatement;
 	
 	private final String insertQuery = "INSERT INTO tag(nama, seo_url, ket) VALUES(?,?,?)";
-	private final String updateQuery = "INSERT INTO tag SET nama=?, seo_url=?, ket=? WHERE id=?";
+	private final String updateQuery = "UPDATE INTO tag SET nama=?, seo_url=?, ket=? WHERE id=?";
 	private final String deleteQuery = "DELETE FROM tag WHERE id=?";
 	private final String selectAllQuery = "SELECT * FROM tag";
 	private final String selectByIdQuery = "SELECT * FROM tag WHERE id=?";
@@ -39,44 +39,34 @@ public class TagDao {
 		this.selectByURLStatement = this.connection.prepareStatement(this.selectByURLQuery);
 		
 	}
-
-	/**
-	 * Insert tag kedalam database
-	 * 
-	 * @param tag
-	 * @return Tag - Mengembalikan tag yang berhasil di insert
-	 * @throws SQLException 
-	 */
-	public Tag insert(Tag tag) throws SQLException {
-		
-		this.insertStatement.setString(1, tag.getNama());
-		this.insertStatement.setString(2, tag.getSeoUrl());
-		this.insertStatement.setString(3, tag.getKet());
-		
-		int idTag = this.insertStatement.executeUpdate();
-		tag.setIdTag(idTag);
-		
-		return tag;
-		
-	}
 	
-	/**
-	 * Update tag di database
-	 * 
-	 * @param tag
-	 * @return Tag - Mengembalikan tag yang berhasil di update
-	 * @throws SQLException 
-	 */
-	public Tag update(Tag tag) throws SQLException {
+	public Tag save(Tag tag) throws SQLException {
 		
-		this.updateStatement.setString(1, tag.getNama());
-		this.updateStatement.setString(2, tag.getSeoUrl());
-		this.updateStatement.setString(3, tag.getKet());
-		this.updateStatement.setInt(4, tag.getIdTag());
-		
-		this.updateStatement.executeUpdate();
-		
-		return tag;
+		if(tag.getIdTag() == 0) {
+			
+			// Insert
+			this.insertStatement.setString(1, tag.getNama());
+			this.insertStatement.setString(2, tag.getSeoUrl());
+			this.insertStatement.setString(3, tag.getKet());
+			
+			int idTag = this.insertStatement.executeUpdate();
+			tag.setIdTag(idTag);
+			
+			return tag;
+			
+		} else {
+			
+			// Update
+			this.updateStatement.setString(1, tag.getNama());
+			this.updateStatement.setString(2, tag.getSeoUrl());
+			this.updateStatement.setString(3, tag.getKet());
+			this.updateStatement.setInt(4, tag.getIdTag());
+			
+			this.updateStatement.executeUpdate();
+			
+			return tag;
+			
+		}
 		
 	}
 	

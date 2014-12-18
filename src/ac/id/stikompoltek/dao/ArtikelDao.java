@@ -18,7 +18,7 @@ public class ArtikelDao {
 	
 	private Connection connection; 
 	
-	private PreparedStatement insertStatement, updateStatement, deleteStatement, selectAllStatement, selectByIdStatement, selectByURLStatement;
+	private PreparedStatement insertStatement, updateStatement, deleteStatement, selectAllStatement, selectByIdStatement, selectByURLStatement, selectByIdKategoriStatement;
 	
 	private final String insertQuery = "INSERT INTO artikel(judul, seo_url, isi, ket, kategori_id, user_id) VALUES(?, ?, ?, ?, ?, ?)";
 	private final String updateQuery = "UPDATE artikel SET judul=?, seo_url=?, isi=?, ket=?, kategori_id=?, user_id=? WHERE id=?";
@@ -26,6 +26,7 @@ public class ArtikelDao {
 	private final String selectAllQuery = "SELECT * FROM artikel";
 	private final String selectByIdQuery = "SELECT * FROM artikel WHERE id=?";
 	private final String selectByURLQuery = "SELECT * FROM artikel WHERE seo_url=?";
+	private final String selectByIdKategori = "SELECT * FROM artikel WHERE kategori_id=?";
 	
 	/**
 	 * Setting koneksi
@@ -41,6 +42,7 @@ public class ArtikelDao {
 		this.selectAllStatement = this.connection.prepareStatement(this.selectAllQuery);
 		this.selectByIdStatement = this.connection.prepareStatement(this.selectByIdQuery);
 		this.selectByURLStatement = this.connection.prepareStatement(this.selectByURLQuery);
+		this.selectByIdKategoriStatement = this.connection.prepareStatement(this.selectByIdKategori);
 		
 	}
 	
@@ -230,5 +232,44 @@ public class ArtikelDao {
 		return null;
 		
 	}
+	
+	/**
+	 * Get artikel by kategori id
+	 * 
+	 * @param idKategori
+	 * @return List of artikels that using selected kategori that was specified on parameter
+	 * @throws SQLException
+	 */
+	public List<Artikel> getByIdKategori(int idKategori) throws SQLException {
+		
+		this.selectByIdKategoriStatement.setInt(1, idKategori);
+		ResultSet rs = this.selectByIdKategoriStatement.executeQuery();
+		
+		// KategoriService
+		KategoriService kategoriService = new KategoriService();
+		kategoriService.setConnection(this.connection);
+		
+		// UserService
+		UserService userService = new UserService();
+		userService.setConnection(this.connection);
+		
+		List<Artikel> artikels = new ArrayList<Artikel>();
+		
+		while(rs.next()) {
+			Artikel artikel = new Artikel();
+			artikel.setIdArtikel(rs.getInt("id"));
+			artikel.setJudul(rs.getString("judul"));
+			artikel.setSeoUrl(rs.getString("seo_url"));
+			artikel.setIsi(rs.getString("isi"));
+			artikel.setKet(rs.getString("ket"));
+			artikel.setKategori(kategoriService.getById(rs.getInt("kategori_id")));
+			artikel.setUser(userService.getById(rs.getInt("user_id")));
+			artikels.add(artikel);
+		}
+		
+		return artikels;
+		
+	}
+	
 	
 }

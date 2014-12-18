@@ -22,19 +22,20 @@ public class TagService {
 		}
 	}
 	
-	
 	/**
-	 * Simpan tag baru
+	 * Save tag
+	 * If you want to save it as new data, set idTag to 0
 	 * 
 	 * @param tag
-	 * @return Tag - Mengembalikan tag yang berhasil di insert
+	 * @return
 	 */
-	public Tag insert(Tag tag) {
+	public Tag save(Tag tag) {
 		try {
 			this.connection.setAutoCommit(false);
-			this.tagDao.insert(tag);
+			this.tagDao.save(tag);
 			this.connection.commit();
 			this.connection.setAutoCommit(true);
+			return tag;
 		} catch (SQLException e) {
 			try {
 				this.connection.rollback();
@@ -43,30 +44,6 @@ public class TagService {
 			}
 			return null;
 		}
-		return tag;
-	}
-	
-	/**
-	 * Update tag
-	 * 
-	 * @param tag
-	 * @return Tag - Mengembalikan tag yang berhasil di update
-	 */
-	public Tag update(Tag tag) {
-		try {
-			this.connection.setAutoCommit(false);
-			this.tagDao.update(tag);
-			this.connection.commit();
-			this.connection.setAutoCommit(true);
-		} catch (SQLException e) {
-			try {
-				this.connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			return null;
-		}
-		return tag;
 	}
 	
 	/**

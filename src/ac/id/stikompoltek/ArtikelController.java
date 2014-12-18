@@ -46,8 +46,7 @@ public class ArtikelController extends HttpServlet {
 				
 				// Set advanced data
 				int idArtikel = (idArtikelPost != null) ? Integer.valueOf(request.getParameter("id-artikel")) : 0;
-				String[] judulSplit = judulArtikelPost.toLowerCase().split(" ");
-				String seoUrl = String.join("-", judulSplit);
+				String seoUrl = judulArtikelPost.toLowerCase().replace(" ", "-");
 				
 				// Get connection
 				Connection connection = (Connection) request.getServletContext().getAttribute("mysqlConnection");

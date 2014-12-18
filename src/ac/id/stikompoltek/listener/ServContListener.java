@@ -37,7 +37,7 @@ public class ServContListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent contextEvent) {
     	try {
     		// Open and get configuration file
-			FileReader dbConfigPropertiesFile = new FileReader("/home/aji/EclipseJEE Workspace/ServletJSPMVC/src/ac/id/stikompoltek/resources/dbconf.properties");
+			FileReader dbConfigPropertiesFile = new FileReader("/home/aji/Git/javaprojects/ServletJSPMVC/src/ac/id/stikompoltek/resources/dbconf.properties");
 			Properties dbConfigProperties = new Properties();
 			dbConfigProperties.load(dbConfigPropertiesFile);
 			
