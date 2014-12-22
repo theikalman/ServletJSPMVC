@@ -1,7 +1,6 @@
 <%@page import="java.util.Locale"%>
 <%@page import="org.apache.catalina.Server"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="ac.id.stikompoltek.dto.User"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="ac.id.stikompoltek.dto.User"%>
 
 <!-- Header -->
 <%@include file="header.jsp"%>
@@ -142,10 +141,8 @@
 <!-- Bootstrap core JavaScript
 	    ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script
-	src="<%=request.getServletContext().getInitParameter("BASE_URL") %>/js/jquery-2.1.1.min.js"></script>
-<script
-	src="<%=request.getServletContext().getInitParameter("BASE_URL") %>/js/bootstrap.min.js"></script>
+<script src="<%=request.getServletContext().getInitParameter("BASE_URL") %>/js/jquery-2.1.1.min.js"></script>
+<script src="<%=request.getServletContext().getInitParameter("BASE_URL") %>/js/bootstrap.min.js"></script>
 
 <!-- Footer -->
 <%@include file="footer.jsp"%>

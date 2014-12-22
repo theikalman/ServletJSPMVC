@@ -8,6 +8,6 @@
 </head>
 <body>
 	<h2>Index.jsp</h2>
-	<a href="admin/login.jsp">Ke halaman login >></a>
+	<a href="admin/login">Ke halaman login >></a>
 </body>
 </html>

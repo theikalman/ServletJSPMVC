@@ -17,7 +17,7 @@ import ac.id.stikompoltek.service.UserService;
 /**
  * Servlet implementation class Login
  */
-@WebServlet(description="Deskripsi :)", urlPatterns="/login")
+@WebServlet(description="Deskripsi :)", urlPatterns="/admin/login")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Forward to the view
-		RequestDispatcher dispathcer = request.getRequestDispatcher("admin/login.jsp");
+		RequestDispatcher dispathcer = request.getRequestDispatcher("login.jsp");
 		dispathcer.forward(request, response);
 	}
 
@@ -53,7 +53,7 @@ public class LoginController extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("userLoggedIn", user);
 			// Redirect to get method
-			response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/dashboard");
+			response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/admin/dashboard");
 		} else {
 			// Redirect to get method
 			response.sendRedirect(request.getRequestURL().toString());

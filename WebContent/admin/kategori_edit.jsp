@@ -11,7 +11,7 @@
 
 	<% Kategori selectedKategori = (Kategori) request.getAttribute("kategoriSelected"); %>
 	
-	<form action="<%=request.getServletContext().getInitParameter("BASE_URL") %>/kategori" method="post" role="form">
+	<form action="<%=request.getServletContext().getInitParameter("BASE_URL") %>/admin/kategori" method="post" role="form">
 		<div class="col-sm-12 hidden">
 			<div class="form-group">
 				<label for="id-kategori">ID Kategori</label>

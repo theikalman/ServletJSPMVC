@@ -17,7 +17,7 @@ public class TagDao {
 	private PreparedStatement insertStatement, updateStatement, deleteStatement, selectAllStatement, selectByIdStatement, selectByURLStatement;
 	
 	private final String insertQuery = "INSERT INTO tag(nama, seo_url, ket) VALUES(?,?,?)";
-	private final String updateQuery = "UPDATE INTO tag SET nama=?, seo_url=?, ket=? WHERE id=?";
+	private final String updateQuery = "UPDATE tag SET nama=?, seo_url=?, ket=? WHERE id=?";
 	private final String deleteQuery = "DELETE FROM tag WHERE id=?";
 	private final String selectAllQuery = "SELECT * FROM tag";
 	private final String selectByIdQuery = "SELECT * FROM tag WHERE id=?";

@@ -13,7 +13,7 @@
 		</div>
 		<div class="col-xs-2 pull-right">
 			<a
-				href="<%=request.getServletContext().getInitParameter("BASE_URL") %>/kategori?act=add"
+				href="<%=request.getServletContext().getInitParameter("BASE_URL") %>/admin/kategori?act=add"
 				class="btn btn-primary pull-right"><i
 				class="glyphicon glyphicon-plus"> </i></a>
 		</div>
@@ -26,10 +26,10 @@
 		<div class="col-sm-4">
 			<div class="artikel-list">
 				<a
-					href="<%=request.getServletContext().getInitParameter("BASE_URL") %>/kategori?act=delete&url=<%=kategori.getSeoUrl() %>"
+					href="<%=request.getServletContext().getInitParameter("BASE_URL") %>/admin/kategori?act=delete&url=<%=kategori.getSeoUrl() %>"
 					class="btn btn-lg btn-circle marginable pull-right glyphicon glyphicon-remove-sign"
 					alt="delete"></a> <a
-					href="<%=request.getServletContext().getInitParameter("BASE_URL") %>/kategori?act=edit&url=<%=kategori.getSeoUrl() %>">
+					href="<%=request.getServletContext().getInitParameter("BASE_URL") %>/admin/kategori?act=edit&url=<%=kategori.getSeoUrl() %>">
 					<h3><%=kategori.getNama() %>
 						<small class="glyphicon glyphicon-pencil"></small>
 					</h3>

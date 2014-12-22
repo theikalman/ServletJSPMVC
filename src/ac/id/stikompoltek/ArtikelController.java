@@ -21,7 +21,7 @@ import ac.id.stikompoltek.service.UserService;
 /**
  * Servlet implementation class Artikel
  */
-@WebServlet("/artikel")
+@WebServlet("/admin/artikel")
 public class ArtikelController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -84,12 +84,12 @@ public class ArtikelController extends HttpServlet {
 				artikelService.save(artikel);
 				
 				// Send to the view
-				response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/artikel");
+				response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/admin/artikel");
 				
 			}
 			
 		} else {
-			response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/login");
+			response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/admin/login");
 		}
 	}
 
@@ -121,7 +121,7 @@ public class ArtikelController extends HttpServlet {
 			switch (action) {
 			case "add":
 				request.setAttribute("listKategori", kategoris);
-				dispatcher = request.getRequestDispatcher("admin/artikel_new.jsp");
+				dispatcher = request.getRequestDispatcher("artikel_new.jsp");
 				dispatcher.forward(request, response);
 				return;
 				
@@ -130,7 +130,7 @@ public class ArtikelController extends HttpServlet {
 					// Get selected artikel
 					request.setAttribute("selectedArtikel", artikel);
 					request.setAttribute("listKategori", kategoris);
-					dispatcher = request.getRequestDispatcher("admin/artikel_edit.jsp");
+					dispatcher = request.getRequestDispatcher("artikel_edit.jsp");
 					dispatcher.forward(request, response);
 					return;
 				}
@@ -140,7 +140,7 @@ public class ArtikelController extends HttpServlet {
 					// Get selected artikel
 					artikelService.delete(artikel);
 					// redirect to artikel list
-					response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/artikel");
+					response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/admin/artikel");
 					return;
 				}
 
@@ -157,7 +157,7 @@ public class ArtikelController extends HttpServlet {
 		request.setAttribute("artikelList", artikelList);
 		
 		// Forward to the view
-		dispatcher = request.getRequestDispatcher("admin/artikel.jsp");
+		dispatcher = request.getRequestDispatcher("artikel.jsp");
 		dispatcher.forward(request, response);
 		
 	}

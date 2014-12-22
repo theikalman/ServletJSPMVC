@@ -19,7 +19,7 @@
 			%>
 
 	<form
-		action="<%=request.getServletContext().getInitParameter("BASE_URL") %>/artikel"
+		action="<%=request.getServletContext().getInitParameter("BASE_URL") %>/admin/artikel"
 		method="post" role="form">
 		<div class="col-sm-12">
 			<div class="form-group">

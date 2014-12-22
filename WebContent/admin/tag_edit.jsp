@@ -1,24 +1,36 @@
+<%@page import="ac.id.stikompoltek.dto.Tag"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 
 <!-- Header -->
 <%@include file="header.jsp"%>
 
 <div class="col-sm-12 main">
 	<h1 class="page-header">
-		Artikel <small class="text-muted">Add new artikel</small>
+		Artikel <small class="text-muted">Edit artikel</small>
 	</h1>
 
-	<form action="<%=request.getServletContext().getInitParameter("BASE_URL") %>/admin/kategori" method="post" role="form">
-		<div class="col-sm-3">
+	<%
+	Tag tagSelected = (Tag) request.getAttribute("tagSelected");
+	%>
+
+	<form action="<%=request.getServletContext().getInitParameter("BASE_URL") %>/admin/tag" method="post" role="form">
+		<div class="col-sm-12">
 			<div class="form-group">
-				<label for="nama-kategori">Nama Kategori</label>
-				<input type="text" name="nama-kategori" class="form-control" autofocus="autofocus" required="required" />
+				<label for="id-tag">Id Tag</label>
+				<input type="text" name="id-tag" value="<%=tagSelected.getIdTag() %>" class="form-control" />
 			</div>
 		</div>
 		<div class="col-sm-3">
 			<div class="form-group">
-				<label for="ket-kategori">Ket Kategori</label>
-				<input type="text" name="ket-kategori" class="form-control" />
+				<label for="id-kategori">Judul</label>
+				<input type="text" name="nama-tag" value="<%=tagSelected.getNama() %>" class="form-control" autofocus="autofocus" />
+			</div>
+		</div>
+		<div class="col-sm-3">
+			<div class="form-group">
+				<label for="ket-tag">Keterangan</label>
+				<input type="text" name="ket-tag" value="<%=tagSelected.getKet() %>" class="form-control" autofocus="autofocus" />
 			</div>
 		</div>
 		<div class="col-sm-12">

@@ -1,24 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+
 <!-- Header -->
 <%@include file="header.jsp"%>
 
 <div class="col-sm-12 main">
 	<h1 class="page-header">
-		Artikel <small class="text-muted">Add new artikel</small>
+		Tag <small class="text-muted">Add new artikel</small>
 	</h1>
 
-	<form action="<%=request.getServletContext().getInitParameter("BASE_URL") %>/admin/kategori" method="post" role="form">
+	<form action="<%=request.getServletContext().getInitParameter("BASE_URL") %>/admin/tag" method="post" role="form">
 		<div class="col-sm-3">
 			<div class="form-group">
-				<label for="nama-kategori">Nama Kategori</label>
-				<input type="text" name="nama-kategori" class="form-control" autofocus="autofocus" required="required" />
+				<label for="nama-tag">Nama</label>
+				<input type="text" name="nama-tag" class="form-control" autofocus="autofocus" />
 			</div>
 		</div>
 		<div class="col-sm-3">
 			<div class="form-group">
-				<label for="ket-kategori">Ket Kategori</label>
-				<input type="text" name="ket-kategori" class="form-control" />
+				<label for="ket-tag">Keterangan</label>
+				<input type="text" name="ket-tag" class="form-control" />
 			</div>
 		</div>
 		<div class="col-sm-12">

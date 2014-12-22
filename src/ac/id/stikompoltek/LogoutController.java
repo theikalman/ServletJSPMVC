@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class Logout
  */
-@WebServlet("/logout")
+@WebServlet("/admin/logout")
 public class LogoutController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -22,7 +22,7 @@ public class LogoutController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.removeAttribute("userLoggedIn");
-		response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/login");
+		response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/admin/login");
 	}
 
 }

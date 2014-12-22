@@ -16,7 +16,7 @@ import ac.id.stikompoltek.dto.Kategori;
 import ac.id.stikompoltek.service.ArtikelService;
 import ac.id.stikompoltek.service.KategoriService;
 
-@WebServlet("/kategori")
+@WebServlet("/admin/kategori")
 public class KategoriController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -55,7 +55,7 @@ public class KategoriController extends HttpServlet {
 			}
 			
 			// Send to the view
-			response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/kategori");
+			response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/admin/kategori");
 			
 		}
 		
@@ -83,7 +83,7 @@ public class KategoriController extends HttpServlet {
 			if (act != null) {
 				switch (act) {
 				case "add":
-					dispatcher = request.getRequestDispatcher("admin/kategori_new.jsp");
+					dispatcher = request.getRequestDispatcher("kategori_new.jsp");
 					dispatcher.forward(request, response);
 					return;
 
@@ -93,7 +93,7 @@ public class KategoriController extends HttpServlet {
 						Kategori kategori = kategoriService.getByURL(url);
 						// Set data for view
 						request.setAttribute("kategoriSelected", kategori);
-						dispatcher = request.getRequestDispatcher("admin/kategori_edit.jsp");
+						dispatcher = request.getRequestDispatcher("kategori_edit.jsp");
 						dispatcher.forward(request, response);
 						return;
 					}
@@ -124,7 +124,7 @@ public class KategoriController extends HttpServlet {
 			}
 
 			// Show for all kategori if no act value on http parameter
-			dispatcher = request.getRequestDispatcher("admin/kategori.jsp");
+			dispatcher = request.getRequestDispatcher("kategori.jsp");
 
 			// Get all kategori data
 			List<Kategori> kategoris = kategoriService.getAll();
@@ -139,7 +139,7 @@ public class KategoriController extends HttpServlet {
 		}
 
 		// Go to login page when no logged in user is
-		response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/login");
+		response.sendRedirect(request.getServletContext().getInitParameter("BASE_URL") + "/admin/login");
 	}
 
 }
