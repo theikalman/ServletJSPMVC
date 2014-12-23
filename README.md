@@ -21,6 +21,6 @@ apache-tomcat-5.5.17
 
 ###Some notes:
 - __DTO as Model__: I preferable call Model as DTO _(Data Transfer Object)_, I get this name from Mr. Koushik on his YouTube Channel, [Java Brains](https://www.youtube.com/user/koushks "Java Brains").
-- __IDE__ : I used Eclipse JEE for this project, but I am not upload the ```.project``` and ```.settings``` file/folder here which is project descriptor for Eclipse. I think that I don't have to.
-- _database_ folder: There are *.sql file in this folder. The *.sql file is for creating database for this project.
+- __IDE__ : I used Eclipse JEE for this project, but I am not upload the `.project` and `.settings` file/folder here which is project descriptor for Eclipse. I think that I don't have to.
+- __database__ folder: There are `*.sql` file in this folder. The `*.sql` file is for creating database for this project.
 - __Errata__ : English is not my native language, some typo or vocabulary may be wrong. Tell me to correct this problem please...
