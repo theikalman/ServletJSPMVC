@@ -3,17 +3,21 @@ ServletJSPMVC
 
 Simple sample for Java Servlet and JSP web apps using MVC pattern
 
-This simple project is about:
+###This simple project is about:
 - Listener
-- JSP
+- JSP _(JavaServer Pages)_
 - Servlet
-- MVC
+- MVC _(Model View Controller)_
 - Scope _(Webaware)_
+- DAO
+- Services
 
-IDE: Eclipse JEE
+###IDE:
+Eclipse JEE
 
-Server: apache-tomcat-5.5.17
+###Server:
+apache-tomcat-5.5.17
 
-Dependencies:
+###Dependencies:
 - mysql-connector-java-5.1.34
 - Apache commons-logging-1.2-bin
