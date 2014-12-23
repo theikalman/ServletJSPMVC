@@ -1,7 +1,7 @@
 ServletJSPMVC
 =============
 
-Simple sample of Java Servlet and JSP web apps using MVC pattern
+Simple sample for Java Servlet and JSP web apps using MVC pattern
 
 This simple project is about:
 - Listener
